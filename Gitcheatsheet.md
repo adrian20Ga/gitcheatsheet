@@ -216,6 +216,12 @@ source ~/.git-completion.bash
 
 
 
+
+
+
+
+
+
 //git cap 3 - working with branches
 
 introduction
@@ -260,3 +266,82 @@ $ vim test.rb
 $ git commit -a -m 'made other changes'
 
 //You have created a branch and jumped to it, you have worked on it; you have returned to the original branch, and have also worked on //it. The changes made in both work sessions are isolated in independent branches: you can freely jump from one to the other as you see //fit. And all this simply with two commands: git branch and git checkout.
+
+To create a new branch and jump to it you can use the git checkout command with the -b option: 
+
+$ git checkout -b adrian
+Switched to a new branch "adrian2
+
+//Create a pointer to the new branch
+$ vim index.html
+$ git commit -a -m 'added a new footer [issue 75]'
+
+//to jump to the master branch without problems:
+$ git checkout master
+Switched to branch "master
+
+//how to merge
+
+//activating (checkout) the branch where you want to merge and launching the git merge command:
+
+$ git checkout master
+$ git merge iss53
+Merge made by recursive.
+ README |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ 
+ //git branch has more functions than creating and deleting branches.
+ 
+ $ git branch
+  iss53
+* master
+  testing
+  
+  //the character * in front of the master branch: indicates the currently active branch. If we make a commit commit, that will be the branch that advances.
+  
+// the --merged and --no-merged options. If you want to see the branches that have been merged into the active branch, you can issue the //git branch --merged command:
+
+$ git branch --merged
+  iss53
+* master
+
+//To display all branches containing jobs without merging yet, you can use the git branch --no-merged command:
+$ git branch --no-merged
+  testing
+  
+if you want to delete the branch, and lose the work contained in it, you can force the deletion with the -D option
+
+
+Following up on branches
+
+//By activating (checkout) a local branch from a remote branch, what we might call a "tracking branch" is automatically created. Tracking branches are local branches that have a direct relationship with some remote branch
+
+$ git checkout --track origin/serverupy
+Branch serverfix set up to track remote branch refs/remotes/origin/serveupy.
+Switched to a new branch "serverfix"Switched to a new branch "serverupy"
+
+//To prepare a local branch with a different name than the remote one, you can use:
+
+$ git checkout -b sf origin/serverfix
+Branch sf set up to track remote branch refs/remotes/origin/serverfix.
+Switched to a new branch "sf"
+
+if you want to delete the serverfix branch from the server, you can use:
+$ git push origin :serverupy
+To git@github.com:schacon/serverupy.git
+ - [deleted]         serverupy
+
+
+//Merging a branch to integrate the divergent job log
+$ git checkout experiment
+$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: added staged command
+
+A record with one point branch on another point branch
+$ git rebase --onto master server client
+
+
+//When you rearrange something, you are abandoning the created commit confirmations and creating new ones;
+//and finally Never reorganize commit commits you have pushed to a public repository!!!!!
+
